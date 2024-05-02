@@ -90,3 +90,10 @@ async def update_book(updated_book=Body()):
     for i in range(len(books)):
         if books[i].get('title')==updated_book.get('title'):
             books[i]=updated_book
+
+@app.delete("/books/delete_record/{title}")
+async def delete_record(title: str):
+    for i in range(len(books)):
+        if books[i].get('title').casefold()==title.casefold():
+            books.pop(i)
+            break;
