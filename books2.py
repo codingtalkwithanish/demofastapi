@@ -53,7 +53,20 @@ async def read_all_books():
 async def create_book(book_request:BookRequest):
     new_book= Book(**book_request.model_dump()) 
     BOOKS.append(find_book_id(new_book))
-    
+
+
+@app.delete("/books/delete_book/{book_id}")
+async def book_delete(book_id : int):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id==book_id:
+            BOOKS.pop(i)
+
+@app.put("/books/update_book")
+async def update_book(book:BookRequest):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id==book.id:
+            BOOKS[i]=book
+
 def find_book_id(book:Book):
     if len(BOOKS)>0:
         book.id=BOOKS[-1].id+1
